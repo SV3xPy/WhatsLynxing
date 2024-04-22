@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "733065413325",
+    "project_id": "whatslynxing-backend",
+    "storage_bucket": "whatslynxing-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733065413325:android:3d547755d7ed27936edf84",
+        "android_client_info": {
+          "package_name": "com.example.whatslynxing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733065413325-5iskme3o9ov2ops28il06s24v90s5suh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whatslynxing",
+            "certificate_hash": "10847b0320ef8f72cbd710e9a72d4116dca4cde4"
+          }
+        },
+        {
+          "client_id": "733065413325-5vn7bc85q8vqr9i8isee6hu018etb0pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwIIjT6rKFL-Ui_0bptygBRB8BeXwCZlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733065413325-5vn7bc85q8vqr9i8isee6hu018etb0pc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "733065413325-c3oeoa2n2d4l7ou1bf4nqic21nkck790.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatslynxing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:whatslynxing/colors.dart';
+import 'package:whatslynxing/common/widgets/custom_button.dart';
+
+class LandingScreen extends StatelessWidget {
+  const LandingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              'Bienvenido a WhatsLynxing',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: size.height / 9),
+            Image.asset(
+              'assets/bg.png',
+              height: 340,
+              width: 340,
+              color: tabColor,
+            ),
+            SizedBox(height: size.height / 9),
+            const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Favor de leer antes nuestra Politica de Privacidad. Pulsa en "Aceptar y continuar" para aceptar los Terminos de Servicio.',
+                style: TextStyle(color: greyColor),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: size.width*0.75,
+              child: CustomButton(
+                text: "ACEPTAR Y CONTINUAR",
+                onPressed: () {},
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
