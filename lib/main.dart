@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/features/landing/screens/landing_screen.dart';
 import 'package:whatslynxing/firebase_options.dart';
+import 'package:whatslynxing/router.dart';
 import 'package:whatslynxing/screens/mobile_layout_screen.dart';
 import 'package:whatslynxing/screens/web_layout_screen.dart';
 import 'package:whatslynxing/utils/responsive_layout.dart';
@@ -25,7 +26,11 @@ class MyApp extends StatelessWidget {
       title: 'WhatsLynxing',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
+        appBarTheme: const AppBarTheme(
+          color: appBarColor,
+        ),
       ),
+      onGenerateRoute: (settings) => generateRoute(settings),
       home: const LandingScreen(),
     );
   }

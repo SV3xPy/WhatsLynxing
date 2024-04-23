@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "733065413325-baro21ind63p10eh18dsk8go7prja9i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whatslynxing",
+            "certificate_hash": "478c5253b114034e7254027391beb9d3b6c6f9ce"
+          }
+        },
+        {
           "client_id": "733065413325-5vn7bc85q8vqr9i8isee6hu018etb0pc.apps.googleusercontent.com",
           "client_type": 3
         }
