@@ -1,32 +1,52 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatslynxing/colors.dart';
+import 'package:whatslynxing/common/widgets/error.dart';
+import 'package:whatslynxing/common/widgets/loader.dart';
+import 'package:whatslynxing/features/auth/controller/auth_controller.dart';
 import 'package:whatslynxing/features/landing/screens/landing_screen.dart';
 import 'package:whatslynxing/firebase_options.dart';
+import 'package:whatslynxing/router.dart';
 import 'package:whatslynxing/screens/mobile_layout_screen.dart';
-import 'package:whatslynxing/screens/web_layout_screen.dart';
-import 'package:whatslynxing/utils/responsive_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'WhatsLynxing',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
+        appBarTheme: const AppBarTheme(
+          color: appBarColor,
+        ),
       ),
-      home: const LandingScreen(),
+      onGenerateRoute: (settings) => generateRoute(settings),
+      home: ref.watch(userDataAuthProvider).when(
+            data: (user) {
+              if (user == null) {
+                return const LandingScreen();
+              }
+              return const MobileLayoutScreen();
+            },
+            error: (err, trace) {
+              return ErrorScreen(
+                error: err.toString(),
+              );
+            },
+            loading: () => const Loader(),
+          ),
     );
   }
 }
