@@ -25,15 +25,15 @@ class LandingScreen extends StatelessWidget {
             const Text(
               'Bienvenido a WhatsLynxing',
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 27,
                 fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: size.height / 9),
             Image.asset(
               'assets/bg.png',
-              height: 340,
-              width: 340,
+              height: 280,
+              width: 280,
               color: tabColor,
             ),
             SizedBox(height: size.height / 9),
