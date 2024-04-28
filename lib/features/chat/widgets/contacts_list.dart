@@ -4,14 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/common/widgets/loader.dart';
 import 'package:whatslynxing/features/chat/controller/chat_controller.dart';
-import 'package:whatslynxing/info.dart';
+//import 'package:whatslynxing/info.dart';
 import 'package:whatslynxing/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatslynxing/models/chat_contact.dart';
+import 'package:whatslynxing/features/auth/controller/auth_controller.dart';
+import 'package:whatslynxing/models/user_model.dart';
 
 class ContactsList extends ConsumerWidget {
   const ContactsList({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Obtener el usuario actual
+    final userDataAsyncValue = ref.watch(userDataAuthProvider);
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: StreamBuilder<List<ChatContact>>(
@@ -25,6 +29,12 @@ class ContactsList extends ConsumerWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var chatContactData = snapshot.data![index];
+                var name = chatContactData.name;
+                UserModel? user = userDataAsyncValue.value;
+                if (user?.name == chatContactData.name) {
+                  name = '${chatContactData.name} (Tú)';
+                }
+
                 return Column(
                   children: [
                     InkWell(
@@ -42,7 +52,7 @@ class ContactsList extends ConsumerWidget {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: ListTile(
                           title: Text(
-                            chatContactData.name,
+                            name,
                             style: const TextStyle(
                               fontSize: 18,
                             ),
