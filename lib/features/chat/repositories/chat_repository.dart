@@ -86,7 +86,7 @@ class ChatRepository {
 
   void _saveDataToUsersSubCollection(
     UserModel senderUserData,
-    UserModel recieverUserData,
+    UserModel? recieverUserData,
     String text,
     DateTime timeSent,
     String recieverUserId,
@@ -109,7 +109,7 @@ class ChatRepository {
         );
 
     var senderChatUser = ChatContact(
-      name: recieverUserData.name,
+      name: recieverUserData!.name,
       profilePic: recieverUserData.profilePic,
       contacId: recieverUserData.uid,
       timeSent: timeSent,
@@ -132,7 +132,8 @@ class ChatRepository {
     required DateTime timeSent,
     required String messageId,
     required String username,
-    required recieverUsername,
+    required String senderUsername,
+    required String? recieverUsername,
     required MessageEnum messageType,
   }) async {
     final message = Message(
@@ -176,13 +177,12 @@ class ChatRepository {
   }) async {
     try {
       var timeSent = DateTime.now();
-      UserModel recieverUserData;
+      UserModel? recieverUserData;
+
       var userDataMap =
           await firestore.collection('users').doc(recieverUserId).get();
 
-      recieverUserData = UserModel.fromMap(
-        userDataMap.data()!,
-      );
+      recieverUserData = UserModel.fromMap(userDataMap.data()!);
 
       var messageId = const Uuid().v1();
 
@@ -200,8 +200,9 @@ class ChatRepository {
           timeSent: timeSent,
           messageType: MessageEnum.text,
           messageId: messageId,
-          recieverUsername: recieverUserData.name,
-          username: senderUser.name);
+          username: senderUser.name,
+          recieverUsername: recieverUserData?.name,
+          senderUsername: senderUser.name);
     } catch (e) {
       showSnackBar(
         content: e.toString(),
@@ -259,14 +260,14 @@ class ChatRepository {
       );
 
       _saveMessageToMessageSubcollection(
-        recieverUserId: recieverUserId,
-        text: imageURL,
-        timeSent: timeSent,
-        messageId: messageId,
-        username: senderUserData.name,
-        recieverUsername: recieverUserData.name,
-        messageType: messageEnum,
-      );
+          recieverUserId: recieverUserId,
+          text: imageURL,
+          timeSent: timeSent,
+          messageId: messageId,
+          username: senderUserData.name,
+          messageType: messageEnum,
+          recieverUsername: recieverUserData.name,
+          senderUsername: senderUserData.name);
     } catch (e) {
       showSnackBar(content: e.toString());
     }
