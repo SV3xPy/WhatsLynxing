@@ -20,7 +20,25 @@ Future<File?> pickImageGallery(BuildContext context) async {
       image = File(pickedImage.path);
     }
   } catch (e) {
-    showSnackBar(context: context, content: e.toString());
+    if (context.mounted) {
+      showSnackBar(context: context, content: e.toString());
+    }
   }
   return image;
+}
+
+Future<File?> pickVideoGallery(BuildContext context) async {
+  File? video;
+  try {
+    final pickedVideo =
+        await ImagePicker().pickVideo(source: ImageSource.gallery);
+    if (pickedVideo != null) {
+      video = File(pickedVideo.path);
+    }
+  } catch (e) {
+    if (context.mounted) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+  return video;
 }
