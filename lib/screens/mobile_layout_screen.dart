@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/features/auth/controller/auth_controller.dart';
 import 'package:whatslynxing/features/auth/screens/login_screen.dart';
+import 'package:whatslynxing/features/group/screens/create_group_screen.dart';
 import 'package:whatslynxing/features/select_contacts/controller/select_contact_controller.dart';
 import 'package:whatslynxing/features/select_contacts/screens/contact_search.dart';
 import 'package:whatslynxing/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:whatslynxing/features/chat/widgets/contacts_list.dart';
 import 'package:whatslynxing/models/user_model.dart';
 
-enum Options { ajustes, logout }
+enum Options { ajustes, logout, grupo }
 
 class MobileLayoutScreen extends ConsumerStatefulWidget {
   static const routeName = '/chats';
@@ -54,6 +55,8 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
         ),
         (route) => false,
       );
+    } else if (value == Options.grupo.index) {
+      Navigator.pushNamed(context, CreateGroupScreen.routeName);
     }
   }
 
@@ -116,6 +119,8 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
               itemBuilder: (context) => [
                 _buildPopupMenuItem(
                     "Ajustes", Icons.settings, Options.ajustes.index),
+                _buildPopupMenuItem(
+                    "Crear Grupo", Icons.group, Options.grupo.index),
                 _buildPopupMenuItem(
                     "Cerrar sesión", Icons.logout, Options.logout.index),
               ],
