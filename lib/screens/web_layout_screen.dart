@@ -4,13 +4,11 @@ import 'package:whatslynxing/info.dart';
 import 'package:whatslynxing/features/chat/widgets/chat_list.dart';
 import 'package:whatslynxing/widgets/web_chat_appbar.dart';
 import 'package:whatslynxing/features/chat/widgets/contacts_list.dart';
-import 'package:whatslynxing/widgets/my_message_card.dart';
-import 'package:whatslynxing/widgets/sender_message_card.dart';
 import 'package:whatslynxing/widgets/web_profile_bar.dart';
 import 'package:whatslynxing/widgets/web_search_bar.dart';
 
 class WebLayoutScreen extends StatelessWidget {
-  const WebLayoutScreen({Key? key}) : super(key: key);
+  const WebLayoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

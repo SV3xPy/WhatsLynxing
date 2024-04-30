@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:whatslynxing/common/widgets/loader.dart';
 import 'package:whatslynxing/features/chat/controller/chat_controller.dart';
 import 'package:whatslynxing/models/message.dart';
-import 'package:whatslynxing/widgets/my_message_card.dart';
-import 'package:whatslynxing/widgets/sender_message_card.dart';
+import 'package:whatslynxing/features/chat/widgets/my_message_card.dart';
+import 'package:whatslynxing/features/chat/widgets/sender_message_card.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -24,7 +24,6 @@ class _ChatListState extends ConsumerState<ChatList> {
   final ScrollController messageController = ScrollController();
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     messageController.dispose();
   }
@@ -55,11 +54,13 @@ class _ChatListState extends ConsumerState<ChatList> {
                 return MyMessageCard(
                   message: messageData.text,
                   date: timeSent,
+                  type: messageData.type,
                 );
               }
               return SenderMessageCard(
                 message: messageData.text,
                 date: timeSent,
+                type: messageData.type,
               );
             },
           );

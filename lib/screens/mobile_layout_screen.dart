@@ -1,7 +1,4 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/features/auth/controller/auth_controller.dart';

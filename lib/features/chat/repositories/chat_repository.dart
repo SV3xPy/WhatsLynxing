@@ -201,7 +201,7 @@ class ChatRepository {
           messageType: MessageEnum.text,
           messageId: messageId,
           username: senderUser.name,
-          recieverUsername: recieverUserData?.name,
+          recieverUsername: recieverUserData.name,
           senderUsername: senderUser.name);
     } catch (e) {
       showSnackBar(
@@ -270,6 +270,47 @@ class ChatRepository {
           senderUsername: senderUserData.name);
     } catch (e) {
       showSnackBar(content: e.toString());
+    }
+  }
+
+  void sendGIFMessage({
+    required BuildContext context,
+    required String gifUrl,
+    required String recieverUserId,
+    required UserModel senderUser,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      UserModel? recieverUserData;
+
+      var userDataMap =
+          await firestore.collection('users').doc(recieverUserId).get();
+
+      recieverUserData = UserModel.fromMap(userDataMap.data()!);
+
+      var messageId = const Uuid().v1();
+
+      _saveDataToUsersSubCollection(
+        senderUser,
+        recieverUserData,
+        'GIF',
+        timeSent,
+        recieverUserId,
+      );
+
+      _saveMessageToMessageSubcollection(
+          recieverUserId: recieverUserId,
+          text: gifUrl,
+          timeSent: timeSent,
+          messageType: MessageEnum.gif,
+          messageId: messageId,
+          username: senderUser.name,
+          recieverUsername: recieverUserData.name,
+          senderUsername: senderUser.name);
+    } catch (e) {
+      showSnackBar(
+        content: e.toString(),
+      );
     }
   }
 }
