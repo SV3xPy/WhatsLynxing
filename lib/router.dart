@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatslynxing/common/widgets/error.dart';
 import 'package:whatslynxing/features/auth/screens/login_screen.dart';
 import 'package:whatslynxing/features/auth/screens/signup_screen.dart';
+import 'package:whatslynxing/features/group/screens/create_group_screen.dart';
 import 'package:whatslynxing/features/landing/screens/verifying_screen.dart';
 //import 'package:whatslynxing/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:whatslynxing/features/chat/screens/mobile_chat_screen.dart';
@@ -44,6 +45,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const MobileLayoutScreen(),
       );
+
+    case CreateGroupScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const CreateGroupScreen(),
+      );
+
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
