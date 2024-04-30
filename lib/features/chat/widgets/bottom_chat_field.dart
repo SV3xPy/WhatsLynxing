@@ -62,6 +62,15 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       sendFileMessage(video, MessageEnum.video);
     }
   }
+  
+  void selectGif() async {
+    final gif = await pickGIF(context);
+    if (gif != null) {
+      ref
+          .read(chatControllerProvider)
+          .sendGIFMessage(context, gif.url, widget.recieverUserId);
+    }
+  }
 
   void hideEmojiContainer() {
     setState(() {
@@ -132,7 +141,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: selectGif,
                             icon: const Icon(
                               Icons.gif,
                               color: Colors.grey,

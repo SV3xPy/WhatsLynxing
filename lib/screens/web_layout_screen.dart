@@ -8,7 +8,7 @@ import 'package:whatslynxing/widgets/web_profile_bar.dart';
 import 'package:whatslynxing/widgets/web_search_bar.dart';
 
 class WebLayoutScreen extends StatelessWidget {
-  const WebLayoutScreen({Key? key}) : super(key: key);
+  const WebLayoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

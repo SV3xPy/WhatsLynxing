@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/common/widgets/custom_button.dart';
 import 'package:whatslynxing/features/auth/screens/login_screen.dart';
