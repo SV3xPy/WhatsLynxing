@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/common/widgets/custom_button.dart';
 import 'package:whatslynxing/features/auth/controller/auth_controller.dart';
+import 'package:whatslynxing/features/auth/screens/resetpassword_screen.dart';
 import 'package:whatslynxing/features/auth/screens/signup_screen.dart';
 import 'package:whatslynxing/screens/mobile_layout_screen.dart';
 
@@ -27,6 +28,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void navigateToSignupScreen(BuildContext context) {
     Navigator.pushNamed(context, SignupScreen.routeName);
+  }
+
+  void navigateToResetPasswordScreen(BuildContext context) {
+    Navigator.pushNamed(context, ResetPasswordScreen.routeName);
   }
 
   @override
@@ -72,7 +77,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 height: 8.0,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  navigateToResetPasswordScreen(context);
+                },
                 child: const Text(
                   "Olvidé mi contraseña.",
                   style: TextStyle(color: Colors.blue),
