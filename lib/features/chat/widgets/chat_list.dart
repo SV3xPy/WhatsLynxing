@@ -11,8 +11,10 @@ import 'package:whatslynxing/features/chat/widgets/sender_message_card.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
+  final bool isGroupChat;
   const ChatList({
     required this.recieverUserId,
+    required this.isGroupChat,
     super.key,
   });
 
@@ -31,8 +33,9 @@ class _ChatListState extends ConsumerState<ChatList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Message>>(
-        stream:
-            ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
+        stream: widget.isGroupChat?
+            ref.read(chatControllerProvider).groupChatStream(widget.recieverUserId)
+            : ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
@@ -49,7 +52,7 @@ class _ChatListState extends ConsumerState<ChatList> {
             itemBuilder: (context, index) {
               final messageData = snapshot.data![index];
               var timeSent = DateFormat.Hm().format(messageData.timeSent);
-              if (messageData.isSeen &&
+              if (!messageData.isSeen &&
                   messageData.recieverId ==
                       FirebaseAuth.instance.currentUser!.uid) {
                 ref.read(chatControllerProvider).setChatMessageSeen(

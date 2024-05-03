@@ -75,6 +75,7 @@ class ContactSearchDelegate extends SearchDelegate<String> {
             arguments: {
               'name': user.name,
               'uid': user.uid,
+              'isGroupChat': false,
             },
           ),
           child: ListTile(

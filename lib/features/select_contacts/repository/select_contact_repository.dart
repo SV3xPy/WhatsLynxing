@@ -77,19 +77,19 @@ class SelectUserRepository {
   //   }
   // }
 
-  // Future<List<Contact>> getContacts() async {
-  //   List<Contact> contacts = [];
-  //   try {
-  //     if (await FlutterContacts.requestPermission()) {
-  //       contacts = await FlutterContacts.getContacts(
-  //         withProperties: true,
-  //       );
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  //   return contacts;
-  // }
+  Future<List<Contact>> getContacts() async {
+    List<Contact> contacts = [];
+    try {
+      if (await FlutterContacts.requestPermission()) {
+        contacts = await FlutterContacts.getContacts(
+          withProperties: true,
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return contacts;
+  }
 
   void selectUser(String selectedEmail, BuildContext context) async {
     try {

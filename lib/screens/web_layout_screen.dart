@@ -47,6 +47,7 @@ class WebLayoutScreen extends StatelessWidget {
                 const Expanded(
                   child: ChatList(
                     recieverUserId: '',
+                    isGroupChat: false,
                   ),
                 ),
                 Container(

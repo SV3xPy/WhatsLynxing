@@ -1,23 +1,40 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/common/utils/utils.dart';
+import 'package:whatslynxing/features/group/controller/group_controller.dart';
+import 'package:whatslynxing/features/group/widgets/select_contacts_group.dart';
 
-class CreateGroupScreen extends StatefulWidget {
+class CreateGroupScreen extends ConsumerStatefulWidget {
   static const String routeName = '/create-group';
   const CreateGroupScreen({super.key});
 
   @override
-  State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+  ConsumerState<CreateGroupScreen> createState() => _CreateGroupScreenState();
 }
 
-class _CreateGroupScreenState extends State<CreateGroupScreen> {
+class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
   File? image;
   final TextEditingController groupNameController = TextEditingController();
+
   void selectImage() async {
     image = await pickImageGallery(context);
     setState(() {});
+  }
+
+  void createGroup() {
+    if (groupNameController.text.trim().isNotEmpty && image != null) {
+      ref.read(groupControllerProvider).createGroup(
+            context,
+            groupNameController.text.trim(),
+            image!,
+            ref.read(selectedGroupContacts),
+          );
+      ref.read(selectedGroupContacts.state).update((state) => []);
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -80,12 +97,13 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   )),
-            )
+            ),
+            const SelectContactsGroup(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: createGroup,
         backgroundColor: tabColor,
         child: const Icon(
           Icons.done,
