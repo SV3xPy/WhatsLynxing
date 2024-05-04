@@ -76,6 +76,7 @@ class ContactSearchDelegate extends SearchDelegate<String> {
               'name': user.name,
               'uid': user.uid,
               'isGroupChat': false,
+              'profilePic': user.profilePic,
             },
           ),
           child: ListTile(

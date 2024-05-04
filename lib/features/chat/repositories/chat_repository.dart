@@ -55,6 +55,7 @@ class ChatRepository {
               lastMessage: chatContact.lastMessage,
             ),
           );
+          contacts.sort((a, b) => b.timeSent.compareTo(a.timeSent));
         }
         return contacts;
       },
@@ -284,15 +285,15 @@ class ChatRepository {
             file,
           );
 
-      UserModel recieverUserData;
+      UserModel? recieverUserData;
       if (!isGroupChat) {
         var userDataMap =
             await firestore.collection('users').doc(recieverUserId).get();
         recieverUserData = UserModel.fromMap(userDataMap.data()!);
       }
-      var userDataMap =
+      /*var userDataMap =
           await firestore.collection('users').doc(recieverUserId).get();
-      recieverUserData = UserModel.fromMap(userDataMap.data()!);
+      recieverUserData = UserModel.fromMap(userDataMap.data()!);*/
 
       String contactMsg;
       switch (messageEnum) {
@@ -321,7 +322,7 @@ class ChatRepository {
           messageId: messageId,
           username: senderUserData.name,
           messageType: messageEnum,
-          recieverUsername: recieverUserData.name,
+          recieverUsername: recieverUserData?.name,
           senderUsername: senderUserData.name,
           isGroupChat: isGroupChat);
     } catch (e) {

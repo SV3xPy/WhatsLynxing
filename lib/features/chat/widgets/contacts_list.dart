@@ -29,11 +29,25 @@ class ContactsList extends ConsumerWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Loader();
                   }
+
                   return ListView.builder(
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var groupData = snapshot.data![index];
+                      DateTime currentDate = DateTime.now();
+                      String formattedTime = '';
+                      if (groupData.timeSent.year == currentDate.year &&
+                          groupData.timeSent.month == currentDate.month &&
+                          groupData.timeSent.day == currentDate.day) {
+                        // Si es el día actual, muestra solo la hora
+                        formattedTime =
+                            DateFormat.Hm().format(groupData.timeSent);
+                      } else {
+                        // Si no es el día actual, muestra la fecha completa
+                        formattedTime =
+                            DateFormat('dd/MM/yy').format(groupData.timeSent);
+                      }
                       return Column(
                         children: [
                           InkWell(
@@ -72,7 +86,7 @@ class ContactsList extends ConsumerWidget {
                                   radius: 30,
                                 ),
                                 trailing: Text(
-                                  DateFormat.Hm().format(groupData.timeSent),
+                                  formattedTime,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 13,
@@ -104,7 +118,19 @@ class ContactsList extends ConsumerWidget {
                       if (user?.name == chatContactData.name) {
                         name = '${chatContactData.name} (Tú)';
                       }
-
+                      DateTime currentDate = DateTime.now();
+                      String formattedTime = '';
+                      if (chatContactData.timeSent.year == currentDate.year &&
+                          chatContactData.timeSent.month == currentDate.month &&
+                          chatContactData.timeSent.day == currentDate.day) {
+                        // Si es el día actual, muestra solo la hora
+                        formattedTime =
+                            DateFormat.Hm().format(chatContactData.timeSent);
+                      } else {
+                        // Si no es el día actual, muestra la fecha completa
+                        formattedTime =
+                            DateFormat('dd/MM/yy').format(chatContactData.timeSent);
+                      }
                       return Column(
                         children: [
                           InkWell(
@@ -143,8 +169,7 @@ class ContactsList extends ConsumerWidget {
                                   radius: 30,
                                 ),
                                 trailing: Text(
-                                  DateFormat.Hm()
-                                      .format(chatContactData.timeSent),
+                                  formattedTime,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 13,

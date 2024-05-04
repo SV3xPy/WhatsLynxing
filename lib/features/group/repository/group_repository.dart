@@ -52,7 +52,9 @@ class GroupRepository {
       );
       await firestore.collection('groups').doc(groupId).set(group.toMap());
     } catch (e) {
+      if (context.mounted) {
       showSnackBar(context: context, content: e.toString());
+      }
     }
   }
 }

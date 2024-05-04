@@ -12,9 +12,11 @@ import 'package:whatslynxing/features/chat/widgets/sender_message_card.dart';
 class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
   final bool isGroupChat;
+  final String senderName;
   const ChatList({
     required this.recieverUserId,
     required this.isGroupChat,
+    required this.senderName,
     super.key,
   });
 
@@ -68,9 +70,10 @@ class _ChatListState extends ConsumerState<ChatList> {
                 );
               }
               return SenderMessageCard(
-                message: messageData.text,
+                senderId: widget.isGroupChat? messageData.senderId : null,                message: messageData.text,
                 date: timeSent,
                 type: messageData.type,
+                isGroupChat: widget.isGroupChat,
               );
             },
           );
