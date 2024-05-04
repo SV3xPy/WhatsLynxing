@@ -77,19 +77,19 @@ class SelectUserRepository {
   //   }
   // }
 
-  // Future<List<Contact>> getContacts() async {
-  //   List<Contact> contacts = [];
-  //   try {
-  //     if (await FlutterContacts.requestPermission()) {
-  //       contacts = await FlutterContacts.getContacts(
-  //         withProperties: true,
-  //       );
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  //   return contacts;
-  // }
+  Future<List<Contact>> getContacts() async {
+    List<Contact> contacts = [];
+    try {
+      if (await FlutterContacts.requestPermission()) {
+        contacts = await FlutterContacts.getContacts(
+          withProperties: true,
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return contacts;
+  }
 
   void selectUser(String selectedEmail, BuildContext context) async {
     try {
@@ -101,27 +101,33 @@ class SelectUserRepository {
       if (userQuery.docs.isNotEmpty) {
         // El usuario fue encontrado, puedes realizar la acción deseada aquí
         final userData = UserModel.fromMap(userQuery.docs.first.data());
-        Navigator.pushNamed(
-          context,
-          MobileChatScreen.routeName,
-          arguments: {
-            'name': userData.name,
-            'uid': userData.uid,
-          },
-        );
+        if (context.mounted) {
+          Navigator.pushNamed(
+            context,
+            MobileChatScreen.routeName,
+            arguments: {
+              'name': userData.name,
+              'uid': userData.uid,
+            },
+          );
+        }
       } else {
         // El usuario no fue encontrado
-        showSnackBar(
-          context: context,
-          content: 'Este correo electrónico no existe en esta aplicación.',
-        );
+        if (context.mounted) {
+          showSnackBar(
+            context: context,
+            content: 'Este correo electrónico no existe en esta aplicación.',
+          );
+        }
       }
     } catch (e) {
       // Maneja el error si ocurre alguno durante la búsqueda
-      showSnackBar(
-        context: context,
-        content: 'Error al buscar usuario: $e',
-      );
+      if (context.mounted) {
+        showSnackBar(
+          context: context,
+          content: 'Error al buscar usuario: $e',
+        );
+      }
     }
   }
 }

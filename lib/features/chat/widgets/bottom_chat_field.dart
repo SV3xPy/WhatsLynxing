@@ -13,8 +13,10 @@ import 'package:whatslynxing/features/chat/controller/chat_controller.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
+  final bool isGroupChat;
   const BottomChatField({
     required this.recieverUserId,
+    required this.isGroupChat,
     super.key,
   });
 
@@ -30,7 +32,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowEmojiContainer = false;
   bool isRecording = false;
   FocusNode focusNode = FocusNode();
-
+  
   @override
   void initState() {
     super.initState();
@@ -46,13 +48,13 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     await _soundRecorder!.openRecorder();
     isRecorderInit = true;
   }
-
   void sendTextMessage() async {
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
             context,
             _messageController.text,
             widget.recieverUserId,
+            widget.isGroupChat,
           );
       setState(() {
         _messageController.text = '';
@@ -86,6 +88,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           file,
           widget.recieverUserId,
           messageEnum,
+          widget.isGroupChat,
         );
   }
 
@@ -104,11 +107,16 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   }
 
   void selectGif() async {
+    if (!mounted) return;
     final gif = await pickGIF(context);
     if (gif != null) {
-      ref
-          .read(chatControllerProvider)
-          .sendGIFMessage(context, gif.url, widget.recieverUserId);
+      if (!mounted) return;
+      ref.read(chatControllerProvider).sendGIFMessage(
+            context,
+            gif.url,
+            widget.recieverUserId,
+            widget.isGroupChat,
+          );
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:whatslynxing/common/enums/message_enum.dart';
 import 'package:whatslynxing/features/auth/controller/auth_controller.dart';
 import 'package:whatslynxing/features/chat/repositories/chat_repository.dart';
 import 'package:whatslynxing/models/chat_contact.dart';
+import 'package:whatslynxing/models/group.dart';
 import 'package:whatslynxing/models/message.dart';
 
 final chatControllerProvider = Provider(
@@ -28,14 +29,23 @@ class ChatController {
     return chatRepository.getChatContacts();
   }
 
+  Stream<List<Group>> chatGroups() {
+    return chatRepository.getChatGroups();
+  }
+
   Stream<List<Message>> chatStream(String recieverUserId) {
     return chatRepository.getChatStream(recieverUserId);
+  }
+
+  Stream<List<Message>> groupChatStream(String groupId) {
+    return chatRepository.getGroupChatStream(groupId);
   }
 
   void sendTextMessage(
     BuildContext context,
     String text,
     String recieverUserId,
+    bool isGroupChat,
   ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
@@ -43,6 +53,7 @@ class ChatController {
             text: text,
             recieverUserId: recieverUserId,
             senderUser: value!,
+            isGroupChat: isGroupChat,
           ),
         );
   }
@@ -52,6 +63,7 @@ class ChatController {
     File file,
     String recieverUserId,
     MessageEnum messageEnum,
+    bool isGroupChat,
   ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
@@ -61,12 +73,17 @@ class ChatController {
             senderUserData: value!,
             messageEnum: messageEnum,
             ref: ref,
+            isGroupChat: isGroupChat,
           ),
         );
   }
 
   void sendGIFMessage(
-      BuildContext context, String gifUrl, String recieverUserId) {
+    BuildContext context,
+    String gifUrl,
+    String recieverUserId,
+    bool isGroupChat,
+  ) {
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
     String newgifUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
@@ -76,7 +93,8 @@ class ChatController {
               context: context,
               gifUrl: newgifUrl,
               recieverUserId: recieverUserId,
-              senderUser: value!),
+              senderUser: value!,
+              isGroupChat: isGroupChat),
         );
   }
 

@@ -13,6 +13,14 @@ final getUsersProvider =
   final selectContactRepository = ref.watch(selectUsersRepositoryProvider);
   return selectContactRepository.getAllUsers();
 });
+final getContactsProvider =
+    //   FutureProvider.family<List<UserModel>, String>((ref, userID) {
+    // final selectUserRepository = ref.watch(selectUsersRepositoryProvider);
+    // return selectUserRepository.getAllUsers(userID); Si no se quiere mostrar al usuario
+    FutureProvider((ref) {
+  final selectContactRepository = ref.watch(selectUsersRepositoryProvider);
+  return selectContactRepository.getContacts();
+});
 
 class SelectUserController {
   final ProviderRef ref;

@@ -78,7 +78,9 @@ class AuthRepository {
       // await auth.sendSignInLinkToEmail(
       //     email: email, actionCodeSettings: actionCodeSettings);
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, content: e.message!);
+      if (context.mounted) {
+        showSnackBar(context: context, content: e.message!);
+      }
       return false;
     }
   }
@@ -168,7 +170,9 @@ class AuthRepository {
             ),
           );
     } catch (e) {
-      showSnackBar(context: context, content: e.toString());
+      if (context.mounted) {
+        showSnackBar(context: context, content: e.toString());
+      }
     }
   }
 

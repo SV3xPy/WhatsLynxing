@@ -34,10 +34,10 @@ class MyMessageCard extends StatelessWidget {
               Padding(
                 padding: type == MessageEnum.text
                     ? const EdgeInsets.only(
-                        left: 10,
+                        left: 32,
                         right: 30,
                         top: 5,
-                        bottom: 20,
+                        bottom: 23,
                       )
                     : const EdgeInsets.only(
                         left: 5,
