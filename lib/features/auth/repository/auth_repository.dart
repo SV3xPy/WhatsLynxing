@@ -35,6 +35,17 @@ class AuthRepository {
     return user;
   }
 
+  Future<bool> userExist(String email) async {
+    var userData = await firestore.collection('users').get();
+    for (var doc in userData.docs) {
+      var user = UserModel.fromMap(doc.data());
+      if (email == user.email) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   Future<bool> signUpEmail(
       BuildContext context, String email, String password) async {
     try {
@@ -183,5 +194,18 @@ class AuthRepository {
         'isOnline': isOnline,
       },
     );
+  }
+
+  Future<bool> resetPassword(String email) async {
+    try {
+      if (await userExist(email)) {
+        await auth.sendPasswordResetEmail(email: email);
+        return true;
+      }
+      return false;
+    } on FirebaseAuthException catch (e) {
+      e.code;
+      return false;
+    }
   }
 }

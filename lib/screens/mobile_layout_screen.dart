@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatslynxing/colors.dart';
+import 'package:whatslynxing/common/utils/utils.dart';
 import 'package:whatslynxing/features/auth/controller/auth_controller.dart';
 import 'package:whatslynxing/features/auth/screens/login_screen.dart';
 import 'package:whatslynxing/features/group/screens/create_group_screen.dart';
@@ -8,6 +11,8 @@ import 'package:whatslynxing/features/select_contacts/controller/select_contact_
 import 'package:whatslynxing/features/select_contacts/screens/contact_search.dart';
 import 'package:whatslynxing/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:whatslynxing/features/chat/widgets/contacts_list.dart';
+import 'package:whatslynxing/features/status/screens/confirm_status_screen.dart';
+import 'package:whatslynxing/features/status/screens/status_users_screen.dart';
 import 'package:whatslynxing/models/user_model.dart';
 
 enum Options { ajustes, logout, grupo }
@@ -21,8 +26,9 @@ class MobileLayoutScreen extends ConsumerStatefulWidget {
 }
 
 class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   var _popupMenuItemIndex = 0;
+  late TabController tabBarController;
 
   PopupMenuItem _buildPopupMenuItem(
       String title, IconData iconData, int position) {
@@ -63,6 +69,7 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
   @override
   void initState() {
     super.initState();
+    tabBarController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -126,15 +133,16 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
               ],
             ),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
+            controller: tabBarController,
             indicatorColor: tabColor,
             indicatorWeight: 4,
             labelColor: tabColor,
             unselectedLabelColor: Colors.grey,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            tabs: [
+            tabs: const [
               Tab(
                 text: 'Chats',
               ),
@@ -147,16 +155,34 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
             ],
           ),
         ),
-        body: const ContactsList(),
+        body: TabBarView(
+          controller: tabBarController,
+          children: const [
+            ContactsList(),
+            StatusUsersScreen(),
+            Text("Calls"),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            final List<UserModel> users = usersAsyncValue.asData!.value;
-            showSearch(
-              context: context,
-              delegate: ContactSearchDelegate(
-                users: users,
-              ),
-            );
+          onPressed: () async {
+            if (tabBarController.index == 0) {
+              final List<UserModel> users = usersAsyncValue.asData!.value;
+              showSearch(
+                context: context,
+                delegate: ContactSearchDelegate(
+                  users: users,
+                ),
+              );
+            } else {
+              File? pickedImage = await pickImageGallery(context);
+              if (pickedImage != null) {
+                Navigator.pushNamed(
+                  context,
+                  ConfirmStatusScreen.routeName,
+                  arguments: pickedImage,
+                );
+              }
+            }
             //Navigator.pushNamed(context, SelectContactsScreen.routeName);
           },
           backgroundColor: tabColor,

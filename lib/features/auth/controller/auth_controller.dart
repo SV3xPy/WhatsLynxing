@@ -64,6 +64,10 @@ class AuthController {
   void setUserState(bool isOnline) {
     authRepository.setUserState(isOnline);
   }
+
+  Future<bool> resetPassword(String email) {
+    return authRepository.resetPassword(email);
+  }
 }
 
 //Hasta como sería el manejo de datos
