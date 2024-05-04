@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/common/widgets/custom_button.dart';
 import 'package:whatslynxing/features/auth/screens/login_screen.dart';
@@ -25,15 +24,15 @@ class LandingScreen extends StatelessWidget {
             const Text(
               'Bienvenido a WhatsLynxing',
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 27,
                 fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: size.height / 9),
             Image.asset(
               'assets/bg.png',
-              height: 340,
-              width: 340,
+              height: 280,
+              width: 280,
               color: tabColor,
             ),
             SizedBox(height: size.height / 9),

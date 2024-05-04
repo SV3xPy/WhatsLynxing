@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/info.dart';
 import 'package:whatslynxing/screens/mobile_chat_screen.dart';
@@ -63,3 +63,4 @@ class ContactsList extends StatelessWidget {
     );
   }
 }
+*/

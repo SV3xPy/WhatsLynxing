@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*dimport 'package:flutter/material.dart';
 import 'package:whatslynxing/colors.dart';
 import 'package:whatslynxing/info.dart';
 import 'package:whatslynxing/widgets/chat_list.dart';
@@ -6,7 +6,7 @@ import 'package:whatslynxing/widgets/chat_list.dart';
 class MobileChatScreen extends StatelessWidget {
   const MobileChatScreen({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContexdt context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
@@ -81,3 +81,4 @@ class MobileChatScreen extends StatelessWidget {
     );
   }
 }
+*/
